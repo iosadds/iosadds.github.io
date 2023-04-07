@@ -103,7 +103,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/04/01/hello-world/" data-id="clg6c9sb90000d0uhflva62oo" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/04/01/hello-world/" data-id="clg6cx9or0000owuhgmy920tz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -126,18 +126,165 @@
     <div class="article-entry" itemprop="articleBody">
       
         <hr>
-<h2 id="数据表的操作"><a href="#数据表的操作" class="headerlink" title="数据表的操作"></a>数据表的操作</h2><p>C语言</p>
-<p>：    比较简单</p>
+<h2 id="数据表的操作"><a href="#数据表的操作" class="headerlink" title="数据表的操作"></a>数据表的操作</h2><p><strong>C语言数据结构的基本操作</strong></p>
+<p>#单链表的存储结构</p>
 <pre><code>    #define OK 1    //正确标识
     #define ERROR 0 //失败标识
     typedef int Status; 
+    typedef int ElemType;   //ElemType的类型根据实际情况而定，这里假定为int
+
+    /*线性表的单链表存储结构*/
+    //构造结点
+    typedef struct Node
+    &#123;
+        ElemType data;
+    struct Node *next;
+    &#125; Node;
+
+    //构造LinkList
+    typedef struct &#123;
+    int lenght;
+    Node *next;
+    &#125;*LinkList;
 </code></pre>
 <hr>
+<p>#构造单链表</p>
+<pre><code>    /*构造一个带头结点的单链表*/
+    Status InitList(LinkList *L)&#123;
+    //生成一个空的LinkList和一个新结点
+    LinkList p = (LinkList)malloc(sizeof(LinkList));
+    Node *q = (Node *)malloc(sizeof(Node)); //头结点
+    q-&gt;next = NULL; //头结点的后继指向null
+    p-&gt;next = q;    //头指针指向头结点
+    p-&gt;lenght = 0;  //初始长度为0
+    (*L) = p;
+    return OK;
+    &#125;
+</code></pre>
+<hr>
+<p>#单链表的插入</p>
+<pre><code>    /**
+     * 单链表插入操作
+     * 初始条件：线性表L已存在
+     * 操作结果：在L中第pos个位置之前插入新的数据元素e，L的长度增加1
+    */
+    Status ListInsert(LinkList *L, ElemType elem, int pos)&#123;
+    if(pos&lt;1 || pos &gt; (*L)-&gt;lenght+1)&#123;
+    return ERROR;
+    &#125;
+    //寻找第pos个结点
+        Node *p = (*L)-&gt;next; //头结点
+        for(int i=1; i&lt;pos; i++)&#123;
+    p = p-&gt;next;
+    &#125;
+    //生成一个新结点
+    Node *q = (Node *) malloc(sizeof(Node));
+    q-&gt;data = elem;
+    q-&gt;next = p-&gt;next;  //将p的后继赋值给q的后继
+    p-&gt;next = q;    //将q赋值给p的后继
+    (*L)-&gt;lenght += 1;  //链表长度加1
+    return OK;
+    &#125;
+</code></pre>
+<hr>
+<p>#单链表的删除</p>
+<pre><code>    /**
+     * 单链表删除操作
+     * 初始条件：线性表L已存在
+     * 操作结果：删除L的第pos个数据元素，并用e返回其值，L的长度减1
+    */
+    Status ListDelete(LinkList *L, ElemType *elem, int pos)&#123;
+    if(pos &lt; 1 || pos&gt;(*L)-&gt;lenght)&#123;
+    return ERROR;
+    &#125;
+    //寻找到第pos个结点
+    Node *p = (*L)-&gt;next, *q;
+    for(int i=1; i&lt;pos; i++)&#123;
+    p=p-&gt;next;
+    &#125;
+    q = p-&gt;next;    //要删除的结点
+    p-&gt;next = q-&gt;next;
+    free(q);
+    (*L) -&gt; lenght -= 1;
+    return OK;
+    &#125;
+</code></pre>
+<hr>
+<p>#清空单链表</p>
+<pre><code>    /**
+     * 清空单链表
+    */
+    Status Clear(LinkList *L)&#123;
+    Node *p = (*L)-&gt;next-&gt;next, *q;
+    while(p != NULL)&#123;
+    q = p;
+    p = p-&gt;next;
+    free(q);
+    &#125;
+    (*L)-&gt;next-&gt;next = NULL;
+    (*L)-&gt;lenght = 0;
+    return OK;
+    &#125;
+</code></pre>
+<hr>
+<p>#摧毁单链表</p>
+<pre><code>    /**
+ * 销毁单链表
+    */
+    Status Destory(LinkList *L)&#123;
+    Node *p = (*L)-&gt;next, *q;
+    while(p != NULL)&#123;
+    q = p;
+    p = p-&gt;next;
+    free(q);
+    &#125;
+    free((*L));
+    (*L) = NULL;
+    return OK;
+    &#125;
+</code></pre>
+<hr>
+<p>#历打印单链表</p>
+<pre><code>    /*打印单链表表中的所有元素*/
+    void OutPut(LinkList L)&#123;
+
+    Node *p=L-&gt;next-&gt;next ;
+    for(int i=0;i&lt;L-&gt;lenght;i++)
+    &#123;
+    printf(&quot;%d &quot;,p-&gt;data );
+    p=p-&gt;next ;
+    &#125; 
+    printf(&quot;\n&quot;);
+    &#125;
+</code></pre>
+<hr>
+<p>#测试运行</p>
+<pre><code>    int main()
+    &#123;
+    LinkList L;
+    //构造单链表
+    InitList(&amp;L);
+    printf(&quot;------测试插入10个数------\n&quot;);
+    for(int i = 1; i&lt;=10;i++)&#123;
+    ListInsert(&amp;L,i,i);
+    &#125;
+    OutPut(L);
+    printf(&quot;------删除第5位的数据------\n&quot;);
+    ElemType elem;
+    ListDelete(&amp;L, &amp;elem, 5);
+    OutPut(L);
+    printf(&quot;------清空单链表------\n&quot;);
+    Clear(&amp;L);
+    OutPut(L);
+    &#125;
+</code></pre>
+<hr>
+<p>欢迎访问<a target="_blank" rel="noopener" href="https://blog.csdn.net/">数据结构：线性表</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/04/01/jiuzhe/" data-id="clg6c9sbh0001d0uh58nd3st0" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/04/01/jiuzhe/" data-id="clg6cx9ow0001owuh3mrb5pkn" class="article-share-link">Share</a>
       
       
     </footer>

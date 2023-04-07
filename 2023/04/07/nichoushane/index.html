@@ -7,19 +7,17 @@
   
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="C语言堆排序一、数组转化为二叉数父结点下标&#x3D;【（k-1)&#x2F;2】、左孩子下标&#x3D;【2k+1】、右孩子下标【2k+2】   二、最大堆排序（Heapify）####从左右孩子中选择最大的孩子结点，与父结点交换，并递归调整交换后的孩子结点####如下图，对节点【4】进行最大堆排序，与节点【6】进行交换，交换后递归调整节点【4】往下查找最大节点【7】并交换 ！图片alt ） 三、创建最大堆（CreateH">
+  <meta name="description" content="C语言堆排序一、数组转化为二叉数父结点下标&#x3D;【（k-1)&#x2F;2】、左孩子下标&#x3D;【2k+1】、右孩子下标【2k+2】   二、最大堆排序（Heapify）####从左右孩子中选择最大的孩子结点，与父结点交换，并递归调整交换后的孩子结点####如下图，对节点【4】进行最大堆排序，与节点【6】进行交换，交换后递归调整节点【4】往下查找最大节点【7】并交换 三、创建最大堆（CreateHeap)###但我">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://example.com/2023/04/07/nichoushane/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="C语言堆排序一、数组转化为二叉数父结点下标&#x3D;【（k-1)&#x2F;2】、左孩子下标&#x3D;【2k+1】、右孩子下标【2k+2】   二、最大堆排序（Heapify）####从左右孩子中选择最大的孩子结点，与父结点交换，并递归调整交换后的孩子结点####如下图，对节点【4】进行最大堆排序，与节点【6】进行交换，交换后递归调整节点【4】往下查找最大节点【7】并交换 ！图片alt ） 三、创建最大堆（CreateH">
+<meta property="og:description" content="C语言堆排序一、数组转化为二叉数父结点下标&#x3D;【（k-1)&#x2F;2】、左孩子下标&#x3D;【2k+1】、右孩子下标【2k+2】   二、最大堆排序（Heapify）####从左右孩子中选择最大的孩子结点，与父结点交换，并递归调整交换后的孩子结点####如下图，对节点【4】进行最大堆排序，与节点【6】进行交换，交换后递归调整节点【4】往下查找最大节点【7】并交换 三、创建最大堆（CreateHeap)###但我">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/2b53591b22c345d79941740d2eaa759b.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/365f9f1cd9334501adec440be822e9aa.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/974c1ae63b63438ab811e88f0fb562ed.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/81ecf14b5649448da262f91ea6e1b563.png">
 <meta property="article:published_time" content="2023-04-07T10:22:13.990Z">
-<meta property="article:modified_time" content="2023-04-07T12:11:26.126Z">
+<meta property="article:modified_time" content="2023-04-07T12:26:05.225Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/2b53591b22c345d79941740d2eaa759b.png">
@@ -88,10 +86,7 @@
 <p><img src="https://img-blog.csdnimg.cn/2b53591b22c345d79941740d2eaa759b.png" alt="图片alt"></p>
 <hr>
 <p><em><strong>二、最大堆排序（Heapify）</strong></em><br>####从左右孩子中选择最大的孩子结点，与父结点交换，并递归调整交换后的孩子结点<br>####如下图，对节点【4】进行最大堆排序，与节点【6】进行交换，交换后递归调整节点【4】往下查找最大节点【7】并交换</p>
-<p>！<a target="_blank" rel="noopener" href="https://img-blog.csdnimg.cn/58c929586e0e4933875b823b8b5594e4.png">图片alt</a></p>
-<p>）</p>
-<p><em><strong>三、创建最大堆（CreateHeap)</strong></em><br>####但我们发现单对一个节点进行最大堆调整并不能使整个二叉树形成最大堆，所以我们需对末尾节点的父节点依次向前进行最大堆排序，从而使得二叉树形成最大堆</p>
-<p>！<a target="_blank" rel="noopener" href="https://img-blog.csdnimg.cn/01442fef2c42495ca8da656fceee5853.png"></a><br><img src="https://img-blog.csdnimg.cn/365f9f1cd9334501adec440be822e9aa.png"><br><img src="https://img-blog.csdnimg.cn/974c1ae63b63438ab811e88f0fb562ed.png"></p>
+<p><em><strong>三、创建最大堆（CreateHeap)</strong></em><br>###但我们发现单对一个节点进行最大堆调整并不能使整个二叉树形成最大堆，所以我们需对末尾节点的父节点依次向前进行最大堆排序，从而使得二叉树形成最大堆</p>
 <hr>
 <p><em><strong>四、堆排序</strong></em><br>（1）根节点为最大值，将其与末尾子节点交换，完成最大值【9】排序</p>
 <p>（2）对根节点进行最大堆调整，以交换的末尾节点不参与调整 ，使根节点为下一个最大值</p>
@@ -187,7 +182,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/04/07/nichoushane/" data-id="clg6ib2sr0001t8uh0uoxecu9" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2023/04/07/nichoushane/" data-id="clg6itsfa0002owuh0whw6779" class="article-share-link">Share</a>
       
       
     </footer>
